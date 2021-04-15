@@ -1,0 +1,24 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
+import time
+import os
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get('http://test-stage.geekbrains.ru:8080\login')
+    driver.find_element_by_name("email").send_keys("test1@test.ru")
+    driver.find_element_by_name('password').send_keys("123456")
+    driver.find_element_by_css_selector("button.button.is-block.is-info.is-large.is-fullwidth").click()
+    driver.get('http://test-stage.geekbrains.ru:8080/uploading')
+    driver.find_element(By.XPATH, '/html/body/section/div[2]/div/div/div/div/div/form/div/label').click()
+    input_area = driver.find_element_by_css_selector('[type="file"]')
+    input_area.send_keys('C:/pyProject/Ui_test/less_5/29.jpg')
+    driver.find_element(By.XPATH, '/html/body/section/div[2]/div/div/div/div/div/form/button').click()
+    assert driver.find_element_by_css_selector('.notification.is-success').text == 'Успех.', "Не выбран  файл"
+    driver.refresh()
+    time.sleep(2)
+finally:
+   driver.quit()

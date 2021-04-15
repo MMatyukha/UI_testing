@@ -1,0 +1,32 @@
+from  selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
+import time
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get('http://test-stage.geekbrains.ru:8080\login')
+    driver.find_element_by_name("email").send_keys("test1@test.ru")
+    driver.find_element_by_name('password').send_keys("123456")
+    driver.find_element_by_css_selector("button.button.is-block.is-info.is-large.is-fullwidth").click()
+    driver.get('http://test-stage.geekbrains.ru:8080/about2')
+    driver.find_element(By.NAME, "name").send_keys("test")
+    driver.find_element(By.NAME, "surname").send_keys("test")
+    radiobutton = driver.find_element_by_css_selector('label:nth-child(2)')
+    if not radiobutton.get_attribute('checked'):
+        radiobutton.click()
+    time.sleep(8)
+    radiobutton1 =driver.find_element_by_css_selector('label:nth-child(5)')
+    radiobutton1.click()
+    checkbox = driver.find_element_by_css_selector('#lang1')
+    checkbox.click()
+    driver.find_element_by_css_selector('div.select').click()
+    select = Select(driver.find_element_by_id('lvl'))
+    select.select_by_index(2)
+    driver.find_element(By.NAME, "surname").send_keys(Keys.ENTER)
+    assert driver.find_element_by_css_selector('.notification.is-success').text == 'Успех.', "Не  успех"
+    time.sleep(8)
+finally:
+   driver.quit()
