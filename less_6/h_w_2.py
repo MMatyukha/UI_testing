@@ -15,8 +15,6 @@ try:
     driver.get('http://test-stage.geekbrains.ru:8080/slow')
     wait.until(EC.element_to_be_clickable((By.NAME, "text_input"))).send_keys("test")
     wait.until(EC.element_to_be_clickable((By.ID, "button"))).click()
-    wait.until(EC.element_to_be_clickable((By.NAME, "text_input"))).send_keys("test")
-    wait.until(EC.element_to_be_clickable((By.ID, "button"))).click()
-	assert driver.find_element_by_css_selector('.notification.is-success').text == 'Успех.', " Поле   не заполнено!"
+    assert driver.find_element_by_css_selector('.notification.is-success').text == 'Успех.', " Поле   не заполнено!"
 finally:
    driver.quit()
